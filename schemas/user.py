@@ -1,5 +1,6 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
+from .product import ProductSchema
 
 
 class UserBase(BaseModel):
@@ -8,13 +9,20 @@ class UserBase(BaseModel):
     role: Optional[str]
 
 
-class UserSchema(UserBase):
+class UserCreate(UserBase):
+    pass
+
+
+class UserUpdate(UserBase):
+    pass
+
+
+class UserDBBase(UserBase):
     id: int
 
+    class Config:
+        from_attributes = True
 
-class UserPostSchema(UserBase):
-    pass
 
-
-class UserPutSchema(UserBase):
-    pass
+class UserSchema(UserBase):
+    products: List[ProductSchema]

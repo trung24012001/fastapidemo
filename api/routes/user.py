@@ -1,12 +1,12 @@
 from typing import List
-from fastapi import APIRouter, HTTPException, status
-from schemas import UserSchema, UserPostSchema, UserPutSchema
+from fastapi import APIRouter, HTTPException, status, File, Form, UploadFile
+from schemas import UserSchema, UserCreate, UserUpdate
 
 
 router = APIRouter()
 
 id = 1
-users = [UserSchema(id=id, username="trungvd", name="Trung", role="Admin")]
+users = [UserSchema(id=id, username="trungvd", name="Trung", role="admin", products=[])]
 
 
 @router.get("/", response_model=List[UserSchema])
@@ -22,8 +22,8 @@ def get_user(user_id: int):
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
 
-@router.post("/", response_model=UserSchema)
-def post_user(user_in: UserPostSchema):
+@router.post("/", response_model=UserSchema, status_code=201)
+def create_user(user_in: UserCreate):
     global id
     for user in users:
         if user.username == user_in.username:
@@ -36,22 +36,25 @@ def post_user(user_in: UserPostSchema):
     return user
 
 
+@router.post("/file", status_code=201)
+async def send_file(file: UploadFile):
+    with open("test.txt", "wb") as f:
+        content = await file.read()
+        f.write(content)
+    return "ok"
+
+
 @router.put("/{user_id}", response_model=UserSchema)
-def put_user(user_id: int, user_in: UserPutSchema):
+def update_user(user_id: int, user_in: UserUpdate):
     for user in users:
         if user.id == user_id:
-            # user = user.model_dump()
-            # user_in = user_in.model_dump(exclude_none=True)
-            # for k in user_in:
-            #     user[k] = user_in[k]
-            # return UserSchema(**user)
             return UserSchema(id=user.id, **user_in.model_dump())
 
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
 
 @router.delete("/{user_id}", response_model=int)
-def delete_user(user_id: int):
+def remove_user(user_id: int):
     for user in users:
         if user.id == user_id:
             users.remove(user)

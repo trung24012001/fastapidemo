@@ -1,5 +1,5 @@
 import pathlib
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 
 
 # Project Directories

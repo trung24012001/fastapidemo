@@ -1,0 +1,26 @@
+ADMIN
+Tại domain: https://procon2023-team.duckdns.org/ 
+1. Đăng nhập tài khoản admin
+2. Click biểu tượng PROCON tại góc bên trái trên cùng
+3. Truy cập giải đấu của trường mình sau đó tạo round đấu
+4. Truy cập round đấu để tạo team và match cho round đấu đó.
+5. Với mỗi match chỉ add đúng 2 team.
+
+Tại domain https://procon2023.duckdns.org
+1. Đăng nhập tài khoản admin
+2. Tạo 1 field trước sau đó tạo 2 game với field đó hoặc ấn "Generate" để tự động tạo field và game
+*Chú ý mỗi field chỉ bao gồm đúng 2 game
+3. Sau khi tạo game xong thì quay lại phần edit field để thêm match vào field
+4. Sau khi xong thì vào phần edit game chỉnh sửa thời gian và các đội có thể bắt đầu chơi.
+
+USER 
+Tại domain: https://procon2023-team.duckdns.org/
+1. Đăng nhập tài khoản user
+2. Lấy token để bắt đầu chơi
+3. Khi chơi các đội gọi qua api player tại: https://procon2023.duckdns.org/api/docs#/player
+*Chú ý chỉ phần api player
+*Chú ý đảm bảo đồng bộ thời gian system trước khi chơi < 500ms (có thể kiểm tra độ trễ với server tại trang replay)
+*Param khi post action
+ACTIONS = [“STAY”, “MOVE”, “BUILD”, “DESTROY”]
+BUILD_DESTROY_PARAMS = [“ABOVE”, “BELOW”, “LEFT”, “RIGHT”]
+MOVE_PARAMS = [“UP”, “DOWN”, “LEFT”, “RIGHT”, “UPPER_LEFT”, “UPPER_RIGHT”, “LOWER_LEFT”, “LOWER_RIGHT”] 
