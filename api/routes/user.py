@@ -1,5 +1,5 @@
 from typing import List
-from fastapi import APIRouter, HTTPException, status, UploadFile, Depends
+from fastapi import APIRouter, HTTPException, status, UploadFile, Depends, Form
 from sqlalchemy.orm import Session
 from schemas import UserSchema, UserCreate, UserUpdate
 from api import deps
@@ -36,7 +36,8 @@ def create_user(user_in: UserCreate, db: Session = Depends(deps.get_db)):
 
 
 @router.post("/upload", status_code=201)
-async def send_file(file: UploadFile):
+async def send_file(file: UploadFile, name: str = Form(), value: str = Form()):
+    print(name, value, file.filename)
     with open(file.filename, "wb") as f:
         content = await file.read()
         f.write(content)
