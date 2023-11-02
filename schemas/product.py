@@ -5,6 +5,7 @@ from typing import Optional
 class ProductBase(BaseModel):
     name: Optional[str]
     description: Optional[str]
+    user_id: Optional[int]
 
 
 class ProductCreate(ProductBase):
@@ -22,5 +23,5 @@ class ProductDBBase(ProductBase):
         from_attributes = True
 
 
-class ProductSchema(ProductBase):
+class ProductSchema(ProductDBBase):
     pass

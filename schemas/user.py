@@ -24,5 +24,5 @@ class UserDBBase(UserBase):
         from_attributes = True
 
 
-class UserSchema(UserBase):
+class UserSchema(UserDBBase):
     products: List[ProductSchema]
