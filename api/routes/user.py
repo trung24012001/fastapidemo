@@ -8,9 +8,14 @@ import crud
 router = APIRouter()
 
 
+# @router.get("/", response_model=List[UserSchema])
+# def get_users(token: str = Depends(deps.get_token), db: Session = Depends(deps.get_db)):
+#     print(token)
+#     return crud.user.get_all(db)
+
+
 @router.get("/", response_model=List[UserSchema])
-def get_users(token: str = Depends(deps.get_token), db: Session = Depends(deps.get_db)):
-    print(token)
+def get_users(db: Session = Depends(deps.get_db)):
     return crud.user.get_all(db)
 
 
@@ -46,12 +51,12 @@ def update_user(user_id: int, user_in: UserUpdate, db: Session = Depends(deps.ge
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"User with ID {user_id} not found",
         )
-    return crud.product.update(db, db_obj=user, obj_in=user_in)
+    return crud.user.update(db, db_obj=user, obj_in=user_in)
 
 
 @router.delete("/{user_id}", response_model=int)
 def remove_user(user_id: int, db: Session = Depends(deps.get_db)):
-    user = crud.product.get(db, id=user_id)
+    user = crud.user.get(db, id=user_id)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -59,3 +64,10 @@ def remove_user(user_id: int, db: Session = Depends(deps.get_db)):
         )
 
     return crud.user.remove(db, obj=user)
+
+
+# @router.delete("/{user_id}", response_model=int)
+# def remove_user(
+#     user: UserSchema = Depends(deps.get_user), db: Session = Depends(deps.get_db)
+# ):
+#     return crud.user.remove(db, obj=user)
