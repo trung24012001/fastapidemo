@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from api.base import api_router
 from core.config import settings
 
@@ -15,6 +16,8 @@ app.add_middleware(
 )
 
 app.include_router(api_router, prefix="/api")
+
+# app.mount("/", StaticFiles(directory="../castle-man-procon/dist", html=True), name="ui")
 
 
 if __name__ == "__main__":
