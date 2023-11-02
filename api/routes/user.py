@@ -1,6 +1,6 @@
+from typing import List
 from fastapi import APIRouter, HTTPException, status
 from schemas import UserSchema, UserPostSchema, UserPutSchema
-from typing import List
 
 
 router = APIRouter()
