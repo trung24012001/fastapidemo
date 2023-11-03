@@ -17,13 +17,13 @@ app.add_middleware(
 )
 
 # static_html = FileResponse("vite-project/dist/index.html")
-# @app.get("/")
+# @app.get("/product/{full_path:path}")
 # def index():
 #     return static_html
 
-
+#app.include_router(api_router, prefix="/api")
+app.mount("/api", api_router, name="api")
 app.mount("/", StaticFiles(directory="vite-project/dist", html=True), name="ui")
-app.include_router(api_router, prefix="/api")
 
 
 if __name__ == "__main__":
