@@ -21,8 +21,10 @@ app.add_middleware(
 # def index():
 #     return static_html
 
-#app.include_router(api_router, prefix="/api")
-app.mount("/api", api_router, name="api")
+api = FastAPI()
+api.include_router(api_router, prefix="/api")
+
+app.mount("/api", api, name="api")
 app.mount("/", StaticFiles(directory="vite-project/dist", html=True), name="ui")
 
 
