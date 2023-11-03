@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from api.base import api_router
 from core.config import settings
 
@@ -15,9 +16,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(api_router, prefix="/api")
+# static_html = FileResponse("vite-project/dist/index.html")
+# @app.get("/")
+# def index():
+#     return static_html
 
-# app.mount("/", StaticFiles(directory="../castle-man-procon/dist", html=True), name="ui")
+
+app.mount("/", StaticFiles(directory="vite-project/dist", html=True), name="ui")
+app.include_router(api_router, prefix="/api")
 
 
 if __name__ == "__main__":
